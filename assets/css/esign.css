@@ -1,0 +1,229 @@
+/* ============================================================
+   E-Sign / Digital Signature Module CSS — TBBA ERP
+   ============================================================ */
+
+/* ─── Signature Modal ─── */
+.esign-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.esign-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.esign-modal-box {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.esign-modal-overlay.active .esign-modal-box {
+    transform: translateY(0);
+}
+
+.esign-modal-header {
+    padding: 16px 20px;
+    background: var(--bg-primary, #1E3A8A);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.esign-modal-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.esign-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.8;
+}
+.esign-modal-close:hover { opacity: 1; }
+
+.esign-modal-body {
+    padding: 20px;
+    background: #f8fafc;
+}
+
+/* ─── Canvas Container ─── */
+.esign-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Fixed height untuk desktop */
+    background: #fff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Base line (guide untuk sign) */
+.esign-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 40px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: #e2e8f0;
+    pointer-events: none; /* Supaya tak block canvas drawing */
+}
+
+.esign-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+.esign-instruction {
+    text-align: center;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* ─── Modal Footer ─── */
+.esign-modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+}
+
+.esign-actions-left {
+    display: flex;
+    gap: 10px;
+}
+.esign-actions-right {
+    display: flex;
+    gap: 10px;
+}
+
+/* ─── UI Status / Preview Component ─── */
+.esign-status-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.esign-status-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.esign-preview-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.esign-preview-box.pending {
+    background: #fffbeb;
+    border-color: #fde68a;
+    justify-content: center;
+    color: #d97706;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.esign-preview-info {
+    display: flex;
+    flex-direction: column;
+}
+.esign-preview-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+}
+.esign-preview-date {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.esign-preview-img {
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+}
+
+.esign-pdf-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* ─── Mobile Responsiveness ─── */
+@media (max-width: 600px) {
+    .esign-modal-box {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        border-radius: 0;
+    }
+    
+    .esign-modal-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .esign-wrapper {
+        flex: 1;
+        height: auto; /* Expand full height di mobile */
+    }
+
+    /* Force landscape mode instruction untuk mobile sign (optional tapi digalakkan) */
+    .esign-instruction::before {
+        content: 'Rotate phone to landscape for better signing area. ';
+        display: block;
+        color: #ef4444;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "The Bridge Business Alliance Mini ERP",
+  "short_name": "TBBA ERP",
+  "description": "Web-based Mini ERP system with GPS Attendance, Tender KPI Tracker, and Corporate Correspondence Management.",
+  "id": "index.php",
+  "start_url": "index.php?page=dashboard",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#1E3A8A",
+  "orientation": "any",
+  "gcm_sender_id": "140514356758",
+  "icons": [
+    {
+      "src": "assets/images/app_icon_v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/app_icon_v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

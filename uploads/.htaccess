@@ -1,0 +1,24 @@
+# Keselamatan: Halang pelaksanaan PHP dalam direktori muat naik (uploads)
+# Fail yang dimuat naik TIDAK boleh melaksanakan kod PHP walaupun bernama .php
+# Akses terus kepada fail (gambar, PDF, dll) masih dibenarkan untuk paparan
+
+# Halang pelaksanaan skrip PHP & skrip bahaya yang lain
+<FilesMatch "\.(php|php3|php4|php5|php7|phtml|phar|pl|py|cgi|sh|bash|asp|aspx|jsp)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Matikan enjin PHP dalam folder ini sepenuhnya
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+# Halang direktori listing
+Options -Indexes
+
+# Sensitive workflow evidence must only be streamed through an authenticated
+# controller. Avatars remain directly readable for profile rendering.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(documents|expenses|finance|leaves|letters|signatures|signed_pdfs|tenders)/ - [F,L,NC]
+</IfModule>

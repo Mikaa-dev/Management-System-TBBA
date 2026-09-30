@@ -1,0 +1,61 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Explicitly bypass rewrite for Service Worker and Manifest
+    RewriteRule ^sw\.js$ - [L]
+    RewriteRule ^manifest\.json$ - [L]
+
+    # Serve public crawler files directly, before application page routing.
+    RewriteRule ^(?:sitemap\.xml|robots\.txt)$ - [L]
+
+    # Don't rewrite if the requested file or directory exists physically on disk
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Special short aliases for Staff Portal Login
+    RewriteRule ^portal/?$ index.php?page=login [QSA,L]
+    RewriteRule ^system/?$ index.php?page=login [QSA,L]
+
+    # General page clean routing (e.g., /login -> index.php?page=login, /dashboard -> index.php?page=dashboard)
+    RewriteCond %{REQUEST_URI} !\.(js|json|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|mp3|mp4|pdf)$ [NC]
+    RewriteRule ^([^/]+)/?$ index.php?page=$1 [QSA,L]
+</IfModule>
+
+# ─── Security: Block Direct Access to Sensitive Files & Folders ───────────────
+
+# Block access to .env files
+<Files ".env">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</Files>
+
+# Block access to JSON credential files anywhere in the project
+<FilesMatch "\.(json)$">
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^(config|scripts|database)/ - [F,L]
+    </IfModule>
+</FilesMatch>
+
+# Block access to PHP scripts in sensitive directories
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Block direct browser access to application internals and dependencies.
+    RewriteRule ^(config|scripts|database|models|controllers|core|storage|vendor)/.*$ - [F,L]
+</IfModule>
+
+# Block access to deployment metadata, environment files and server-only files.
+<FilesMatch "(\.htaccess|\.env.*|\.gitignore|\.user\.ini|composer\.(json|lock)|router\.php|PUSH_NOTIFICATION_SETUP\.md|.*\.log|.*\.sql|.*\.zip|.*\.bak)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
