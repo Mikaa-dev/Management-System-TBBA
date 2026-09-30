@@ -22,7 +22,7 @@ importScripts('https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging-com
 // Ini adalah PUBLIC keys — selamat untuk diletakkan dalam service worker.
 // Pastikan ini SAMA dengan nilai dalam assets/js/firebase-push.js
 firebase.initializeApp({
-    apiKey: self.FIREBASE_CONFIG?.apiKey || "AIzaSyDmWWs5aVLA_sFQ1sq7eC9MiQJgQOIXtqk",
+    apiKey: self.FIREBASE_CONFIG?.apiKey || "YOUR_API_KEY_HERE",
     authDomain: self.FIREBASE_CONFIG?.authDomain || "tbba-5e780.firebaseapp.com",
     projectId: self.FIREBASE_CONFIG?.projectId || "tbba-5e780",
     storageBucket: self.FIREBASE_CONFIG?.storageBucket || "tbba-5e780.firebasestorage.app",
